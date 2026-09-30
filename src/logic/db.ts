@@ -30,8 +30,12 @@ export class Database extends Dexie {
 
 export const db = new Database();
 
-db.cloud.configure({
-  databaseUrl: "https://zo30f12v5.dexie.cloud",
-  tryUseServiceWorker: true,
-  customLoginGui: true,
-});
+// La base de Dexie Cloud del proyecto original solo acepta skola.cards; en un
+// despliegue propio no se configura, y la app funciona solo en local.
+if (typeof location !== "undefined" && location.hostname === "skola.cards") {
+  db.cloud.configure({
+    databaseUrl: "https://zo30f12v5.dexie.cloud",
+    tryUseServiceWorker: true,
+    customLoginGui: true,
+  });
+}

@@ -23,6 +23,7 @@ import { useLocalStorage } from "./lib/hooks/useLocalStorage";
 import { useMediaQuery } from "./lib/hooks/useMediaQuery";
 import { useDeckStatsCacheInit } from "./logic/deck/hooks/useDeckStatsCacheInit";
 import { useSetting } from "./logic/settings/hooks/useSetting";
+import { useSubscriptionAutoSync } from "./logic/subscription/useSubscriptionAutoSync";
 
 const BASE = "app-shell";
 
@@ -41,6 +42,7 @@ function AppContent() {
   useRestoreLanguage();
   useNotificationSetup();
   useDeckStatsCacheInit();
+  useSubscriptionAutoSync();
   const [sidebarMenuOpened, sidebarHandlers] = useDisclosure(false);
 
   const [registered] = useLocalStorage("registered", false);

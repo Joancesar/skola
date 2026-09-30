@@ -9,6 +9,7 @@ import {
   IconInfoCircle,
   IconPalette,
   IconPencil,
+  IconRss,
   IconSettings,
 } from "@tabler/icons-react";
 import { t } from "i18next";
@@ -22,6 +23,7 @@ import DatabaseSettingsView from "./DatabaseSettingsView/DatabaseSettingsView";
 import EditingSettingsView from "./EditingSettingsView/EditingSettingsView";
 import GeneralSettingsView from "./GeneralSettingsView";
 import LearnSettingsView from "./LearnSettingsView";
+import SubscriptionsSettingsView from "./SubscriptionsSettingsView";
 import "./SettingsView.css";
 
 const BASE = "settings-view";
@@ -72,6 +74,10 @@ export default function SettingsView() {
             <IconBolt size={18} />
             {t("settings.learn.title")}
           </Tabs.Tab>
+          <Tabs.Tab value="subscriptions">
+            <IconRss size={18} />
+            {t("settings.subscriptions.title", "Suscripciones")}
+          </Tabs.Tab>
           <Tabs.Tab value="database">
             <IconDatabase size={18} />
             {t("settings.database.title")}
@@ -102,6 +108,9 @@ export default function SettingsView() {
         </Tabs.Panel>
         <Tabs.Panel value="learn">
           <LearnSettingsView />
+        </Tabs.Panel>
+        <Tabs.Panel value="subscriptions">
+          <SubscriptionsSettingsView />
         </Tabs.Panel>
         <Tabs.Panel value="database">
           <DatabaseSettingsView />
