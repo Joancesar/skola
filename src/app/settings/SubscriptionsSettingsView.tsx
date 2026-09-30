@@ -12,7 +12,7 @@ import {
   slugify,
   upsertSubscription,
 } from "@/logic/subscription/storage";
-import { describeResult, syncSubscription } from "@/logic/subscription/sync";
+import { syncSubscription } from "@/logic/subscription/sync";
 import { Subscription } from "@/logic/subscription/types";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -26,16 +26,15 @@ function formatDate(iso?: string) {
 function SubscriptionItem({ sub }: { sub: Subscription }) {
   const [t] = useTranslation();
   const [busy, setBusy] = useState(false);
-  const [message, setMessage] = useState<string | null>(null);
 
+  // El resultado y el error quedan guardados en la suscripción (lastResult /
+  // lastError) y se pintan abajo; no hace falta un mensaje aparte.
   const sync = async () => {
     setBusy(true);
-    setMessage(null);
     try {
-      const r = await syncSubscription(sub);
-      setMessage(describeResult(r));
-    } catch (e) {
-      setMessage(e instanceof Error ? e.message : String(e));
+      await syncSubscription(sub);
+    } catch {
+      // syncSubscription ya guarda el error en lastError
     } finally {
       setBusy(false);
     }
@@ -77,7 +76,6 @@ function SubscriptionItem({ sub }: { sub: Subscription }) {
             {sub.lastError}
           </Text>
         )}
-        {message && <Text size="sm">{message}</Text>}
         <Switch
           label={t(
             "settings.subscriptions.auto-sync",
